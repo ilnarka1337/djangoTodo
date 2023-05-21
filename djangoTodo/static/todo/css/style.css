@@ -1,0 +1,9 @@
+@import url('https://fonts.cdnfonts.com/css/montserrat');
+
+todo_list {
+    /*font-family: 'Montserrat', serif;*/
+}
+
+.list-group{
+    max-width: 600px;
+}

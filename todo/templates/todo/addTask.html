@@ -1,0 +1,13 @@
+{% extends 'todo_base.html' %}
+{% load static %}
+{% block extrahead %}
+    <title>Добавить дело</title>
+    <link rel="stylesheet" href="{% static 'todo/css/style.css' %}">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Добавить</button>
+    </div>
+{% endblock %}

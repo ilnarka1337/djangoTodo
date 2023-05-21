@@ -1,0 +1,62 @@
+{% extends 'todo_base.html' %}
+{% load static %}
+{% block extrahead %}
+    <title>Список дел</title>
+    <link rel="stylesheet" href="{% static 'todo/css/style.css' %}">
+{% endblock %}
+{% block body %}
+    <todo_list>
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                <div class="list-group">
+                    {% for task in task_list %}
+                        <label class="list-group-item d-flex gap-3">
+                            <input class="form-check-input flex-shrink-0" type="checkbox" value=""
+                            {% if task.status == 2 %}
+                                   checked=""
+                            {% endif %}
+                                   style="font-size: 1.375em;">
+                            <span class="pt-1 form-checked-content">
+                                Категория:
+                                <strong>
+                                    <span style="vertical-align: inherit;">
+                                        <span style="vertical-align: inherit;">{{ task.category.title }}</span>
+                                    </span>
+                                </strong>
+                                <small class="d-block text-body-secondary">
+                                    <span style="vertical-align: inherit;">
+                                        <span style="vertical-align: inherit;">{{ task.title }}</span>
+                                    </span>
+                                </small>
+                                <small class="d-block text-body-secondary">
+                                    <span style="vertical-align: inherit;">
+                                        <span style="vertical-align: inherit;">{{ task.description }}</span>
+                                    </span>
+                                </small>
+                                <small class="d-block text-body-secondary">
+                                    Дата начала:
+                                    <span style="vertical-align: inherit;">
+                                        <span style="vertical-align: inherit;">
+                                            {{ task.started_at_date }}</span>
+                                    </span>
+                                </small>
+                                <small class="d-block text-body-secondary">
+                                    Время начала:
+                                    <span style="vertical-align: inherit;">
+                                        <span style="vertical-align: inherit;">{{ task.started_at_time }}</span>
+                                    </span>
+                                </small>
+                            </span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+            <br>
+            <hr>
+
+            <a href="{% url 'task_create' %}"><input class="btn btn-primary" type="button" value="Добавление задачи"
+                                                     style="font-family: 'Montserrat', serif"></a>
+        </div>
+    </todo_list>
+
+{% endblock %}
