@@ -6,4 +6,13 @@ todo_list {
 
 .list-group{
     max-width: 600px;
+    width: 500px;
+}
+a{
+    text-decoration: underline;
+    color: black;!important;
+}
+
+.change-status{
+    font-size: 10px;
 }

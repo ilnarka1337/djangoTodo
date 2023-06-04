@@ -10,27 +10,29 @@
             <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                 <div class="list-group">
                     {% for task in task_list %}
-                        <label class="list-group-item d-flex gap-3">
-                            <input class="form-check-input flex-shrink-0" type="checkbox" value=""
-                            {% if task.status == 2 %}
-                                   checked=""
-                            {% endif %}
-                                   style="font-size: 1.375em;">
-                            <span class="pt-1 form-checked-content">
-                                Категория:
+                        <span class="list-group-item align-content-between d-flex gap-3">
+{#                            <input class="form-check-input flex-shrink-0" type="checkbox" value=""#}
+{#                                    {% if task.status == 2 %}#}
+{#                                   checked=""#}
+{#                                    {% endif %}#}
+{#                                   style="font-size: 1.375em;">#}
+                            <span class="pt-1 d-flex flex-column form-checked-content order-first">
                                 <strong>
                                     <span style="vertical-align: inherit;">
-                                        <span style="vertical-align: inherit;">{{ task.category.title }}</span>
+                                        <span style="vertical-align: inherit;">
+                                            <a href="{{ task.get_absolute_url }}">{{ task.title }}</a>
+                                        </span>
                                     </span>
                                 </strong>
                                 <small class="d-block text-body-secondary">
                                     <span style="vertical-align: inherit;">
-                                        <span style="vertical-align: inherit;">{{ task.title }}</span>
+                                        <span style="vertical-align: inherit;">{{ task.description }}</span>
                                     </span>
                                 </small>
                                 <small class="d-block text-body-secondary">
                                     <span style="vertical-align: inherit;">
-                                        <span style="vertical-align: inherit;">{{ task.description }}</span>
+                                        Категория:
+                                        <span style="vertical-align: inherit;">{{ task.category.title }}</span>
                                     </span>
                                 </small>
                                 <small class="d-block text-body-secondary">
@@ -47,15 +49,31 @@
                                     </span>
                                 </small>
                             </span>
-                        </label>
+                            <span class="small d-flex flex-column text-body-secondary ms-auto order-last change-status">
+                                {{ task.get_status_display }}
+                                {% if task.status == 0 %}
+                                    <a href="{% url 'task_start' pk=task.pk %}" class="btn btn-primary btn-sm m-1">Начать</a>
+                                {% endif %}
+                                {% if task.status != 2 %}
+                                <a href="{% url 'task_done' pk=task.pk %}"
+                                   class="btn btn-primary btn-sm m-1">Выполнил</a>
+                                {% endif %}
+                            </span>
+                        </span>
                     {% endfor %}
+                    <a href="{% url 'task_create' %}" class="btn btn-primary mt-3 mx-auto">
+                        Добавление задачи
+                    </a>
+                    <a href="{% url 'big_task_create' %}" class="btn btn-primary mt-3 mx-auto">
+                        Добавление крупной задачи
+                    </a>
+                    {#                    <a href="{% url 'task_create' %}"><input class="btn btn-primary mt-3 mx-auto" type="button"#}
+                    {#                                                             value="Добавление задачи"#}
+                    {#                                                             style="font-family: 'Montserrat', serif"></a>#}
                 </div>
             </div>
             <br>
             <hr>
-
-            <a href="{% url 'task_create' %}"><input class="btn btn-primary" type="button" value="Добавление задачи"
-                                                     style="font-family: 'Montserrat', serif"></a>
         </div>
     </todo_list>
 
