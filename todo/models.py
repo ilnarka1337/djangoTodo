@@ -2,6 +2,7 @@ import datetime
 
 import django.utils.timezone
 from django.db import models
+from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
 CHOICES = (
@@ -20,6 +21,10 @@ class Category(MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['title']
 
+    class Meta:
+        verbose_name = 'категория'
+        verbose_name_plural = 'категории'
+
     def __str__(self):
         return self.title
 
@@ -34,10 +39,21 @@ class Task(models.Model):
     due_date_date = models.DateField(verbose_name='Дата окончания', blank=True, null=True)
     due_date_time = models.TimeField(verbose_name='Время окончания', blank=True, null=True)
     order_in_big_task = models.IntegerField(blank=True, null=True, default=0, verbose_name='Приоритетность')
-    status = models.IntegerField(default=0, choices=CHOICES)
+    status = models.IntegerField(default=0, choices=CHOICES, verbose_name='Статус')
+
+    class Meta:
+        verbose_name = 'задача'
+        verbose_name_plural = 'задачи'
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('task_detail', kwargs={'pk' : self.pk})
+
+
+
 
 
 class BigTask(models.Model):
@@ -51,6 +67,10 @@ class BigTask(models.Model):
     due_date_date = models.DateField(verbose_name='Дата окончания', blank=True, null=True)
     due_date_time = models.TimeField(verbose_name='Время окончания', blank=True, null=True)
     status = models.IntegerField(default=0, choices=CHOICES)
+
+    class Meta:
+        verbose_name = 'большая задача'
+        verbose_name_plural = 'большие задачи'
 
     def __str__(self):
         return self.title

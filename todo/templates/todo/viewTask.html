@@ -1,0 +1,12 @@
+{% extends 'todo_base.html' %}
+{% block body %}
+    <div class="container">
+        {{ task.title }}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ tasktupdateform.as_p }}
+            <button type="submit" class="btn btn-primary">Обновить</button>
+        </form>
+    {{ context }}
+    </div>
+{% endblock %}
