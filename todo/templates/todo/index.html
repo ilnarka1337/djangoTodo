@@ -12,36 +12,53 @@
                 <div class="list-group">
                     <form method="get">
                         <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto">
-                            Сбросить
+                            <a href="{% url 'home' %}" style="text-decoration: none">Сбросить</a>
                         </button>
                     </form>
                     <form method="get">
-                            <input type="hidden" name="date_range_after" value="{{ date_list|get_item:"now" }}">
-                            <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto"
-                                    value="{{ date_list|get_item:"now" }}" name="date_range_before">
-                                Сегодня
-                            </button>
-                            <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto"
-                                    value="{{ date_list|get_item:"tomorrow" }}" name="date_range_before">
-                                До завтра
-                            </button>
-                            <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto"
-                                    value="{{ date_list|get_item:"next_week" }}" name="date_range_before">
-                                На неделю
-                            </button>
+                        <input type="hidden" name="date_range_after" value="{{ date_list|get_item:"now" }}">
+{#                        <label>#}
+{#                            {{ task_list.form.date_range }}#}
+{#                        </label>#}
+                        <label>
+                            <select name="date_range_before" class="form-select">
+                                <option value="{{ date_list|get_item:"all" }}">Все предстоящие</option>
+                                <option value="{{ date_list|get_item:"now" }}">Сегодня</option>
+                                <option value="{{ date_list|get_item:"tomorrow" }}">До завтра</option>
+                                <option value="{{ date_list|get_item:"next_week" }}">На неделю</option>
+                            </select>
+                        </label>
+                        <label>
+                            {{ task_list.form.status }}
+                        </label>
+                        {#                            <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto"#}
+                        {#                                    value="{{ date_list|get_item:"now" }}" name="date_range_before">#}
+                        {#                                Сегодня#}
+                        {#                            </button>#}
+                        {#                            <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto"#}
+                        {#                                    value="{{ date_list|get_item:"tomorrow" }}" name="date_range_before">#}
+                        {#                                До завтра#}
+                        {#                            </button>#}
+                        {#                            <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto"#}
+                        {#                                    value="{{ date_list|get_item:"next_week" }}" name="date_range_before">#}
+                        {#                                На неделю#}
+                        {#                            </button>#}
+                        <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto">
+                            Выбрать
+                        </button>
                     </form>
-                    <form method="get">
-                        <span>
-                            {% for status_button in task_list.form.status %}
-                                <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto"
-                                        value="{{ forloop.counter0 }}" name="status">
-                                {{ status_button }}
-                                </button>
-                            {% endfor %}
-                        </span>
+{#                    <form method="get">#}
+{#                        <span>#}
+{#                            {% for status_button in task_list.form.status %}#}
+{#                                <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto"#}
+{#                                        value="{{ forloop.counter0 }}" name="status">#}
+{#                                {{ status_button }}#}
+{#                                </button>#}
+{#                            {% endfor %}#}
+{#                        </span>#}
                         {#                        {{ task_list.form }}#}
                         {#                        <input type="submit"/>#}
-                    </form>
+{#                    </form>#}
                     {% for task in task_list.qs %}
                         <span class="list-group-item align-content-between d-flex gap-3">
                             <span class="pt-1 d-flex flex-column form-checked-content order-first">
