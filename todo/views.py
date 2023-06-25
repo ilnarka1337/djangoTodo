@@ -35,14 +35,9 @@ def task_listing(request):
     # task_filtered = TaskFilter(request.GET, queryset=Task.objects.filter(status__lte=1))
     task_filtered = TaskFilter(request.GET, queryset=Task.objects.all())
     date_list = {
-        "now": now().date().isoformat(),
-        "tomorrow": now() + timedelta(days=1),
-        "next_week": now() + timedelta(days=7),
-    }
-    date_list = {
-        "now": Task,
-        "tomorrow": now() + timedelta(days=1),
-        "next_week": now() + timedelta(days=7),
+        "now": f"{now().date().isoformat()}",
+        "tomorrow": (now() + timedelta(days=1)).date().isoformat(),
+        "next_week": (now() + timedelta(days=7)).date().isoformat(),
     }
     context = {
         "task_list": task_filtered,

@@ -29,7 +29,8 @@ ALLOWED_HOSTS = ['192.168.31.247',
                  '127.0.0.1',
                  '0.0.0.0',
                  '192.168.31.192',
-                 'djangotodo.herokuapp.com','127.0.0.1']
+                 'minejooker.pythonanywhere.com',
+                 '127.0.0.1']
 
 # Application definition
 

@@ -7,8 +7,9 @@ class TaskFilter(django_filters.FilterSet):
     status = django_filters.ChoiceFilter(choices=CHOICES, empty_label=None, null_value=None)
     start_date = django_filters.DateFilter(field_name='started_at_date', lookup_expr='gt')
     end_date = django_filters.DateFilter(field_name='started_at_date', lookup_expr='lt')
-    date_range = django_filters.DateRangeFilter(field_name='started_at_date')
+    date_rangee = django_filters.DateRangeFilter(field_name='started_at_date')
+    date_range = django_filters.DateFromToRangeFilter(field_name='started_at_date')
 
     class Meta:
         model = Task
-        fields = ['status']
+        fields = ['status', 'date_range']
