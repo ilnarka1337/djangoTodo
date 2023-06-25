@@ -24,7 +24,12 @@ SECRET_KEY = 'django-insecure-%e8d_j-%r3(bmf@dzat$uvuol$t%z4a(&kk6g=tnmp#p^_epw_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.31.247',
+                 'localhost',
+                 '127.0.0.1',
+                 '0.0.0.0',
+                 '192.168.31.192',
+                 'djangotodo.herokuapp.com','127.0.0.1']
 
 # Application definition
 
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'todo.apps.TodoConfig',
     'mptt',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

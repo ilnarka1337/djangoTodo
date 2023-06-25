@@ -1,15 +1,57 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.utils.timezone import now
+from datetime import timedelta
 from todo.models import *
 from .forms import *
+from .services import *
 
 
 # Create your views here.
-class TaskListView(ListView):
-    model = Task
-    template_name = 'todo/index.html'
-    context_object_name = 'task_list'
+# class TaskListView(ListView):
+#     model = Task
+#     template_name =
+#     context_object_name = 'task_list'
+#
+#     def get_queryset(self):
+#         return Task.objects.filter(status__lte=1)
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super(TaskListView, self).get_context_data()
+#         context['status_list'] = CHOICES
+#         context['task_done_list'] = self.model.objects.filter(status=2)
+#         context['task_all_list'] = self.model.objects.all()
+#         return context
+#
+#     #
+#     def update_queryset(self):
+#         self.queryset = Task.objects.filter(status=2)
+#         return 1
+
+
+def task_listing(request):
+    # task_filtered = TaskFilter(request.GET, queryset=Task.objects.filter(status__lte=1))
+    task_filtered = TaskFilter(request.GET, queryset=Task.objects.all())
+    date_list = {
+        "now": now().date().isoformat(),
+        "tomorrow": now() + timedelta(days=1),
+        "next_week": now() + timedelta(days=7),
+    }
+    date_list = {
+        "now": Task,
+        "tomorrow": now() + timedelta(days=1),
+        "next_week": now() + timedelta(days=7),
+    }
+    context = {
+        "task_list": task_filtered,
+        "status_list": CHOICES,
+        "date_list": date_list,
+        "task_done_list": Task.objects.filter(status=2),
+        "task_all_list": Task.objects.all(),
+    }
+    return render(request, "todo/index.html", context)
 
 
 class TaskCreateView(CreateView):
