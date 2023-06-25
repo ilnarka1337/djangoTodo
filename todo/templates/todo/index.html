@@ -17,17 +17,17 @@
                     </form>
                     <form method="get">
                         <input type="hidden" name="date_range_after" value="{{ date_list|get_item:"now" }}">
-{#                        <label>#}
-{#                            {{ task_list.form.date_range }}#}
-{#                        </label>#}
                         <label>
-                            <select name="date_range_before" class="form-select">
-                                <option value="{{ date_list|get_item:"all" }}">Все предстоящие</option>
-                                <option value="{{ date_list|get_item:"now" }}">Сегодня</option>
-                                <option value="{{ date_list|get_item:"tomorrow" }}">До завтра</option>
-                                <option value="{{ date_list|get_item:"next_week" }}">На неделю</option>
-                            </select>
+                            {{ task_list.form.date_range_modify }}
                         </label>
+{#                        <label>#}
+{#                            <select name="date_range_before" class="form-select">#}
+{#                                <option value="{{ date_list|get_item:"all" }}">Все предстоящие</option>#}
+{#                                <option value="{{ date_list|get_item:"now" }}">Сегодня</option>#}
+{#                                <option value="{{ date_list|get_item:"tomorrow" }}">До завтра</option>#}
+{#                                <option value="{{ date_list|get_item:"next_week" }}">На неделю</option>#}
+{#                            </select>#}
+{#                        </label>#}
                         <label>
                             {{ task_list.form.status }}
                         </label>
@@ -59,6 +59,7 @@
                         {#                        {{ task_list.form }}#}
                         {#                        <input type="submit"/>#}
 {#                    </form>#}
+                    Задач в данном списке:{{ task_list.qs.count }}
                     {% for task in task_list.qs %}
                         <span class="list-group-item align-content-between d-flex gap-3">
                             <span class="pt-1 d-flex flex-column form-checked-content order-first">
