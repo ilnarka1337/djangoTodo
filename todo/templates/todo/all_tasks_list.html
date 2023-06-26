@@ -10,11 +10,10 @@
         <div class="container">
             <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                 <div class="task-title list-group">
-                <span class="mx-auto h3">
-                    Список <a href="{% url 'all_tasks' %}" title="Перейти ко всем задачам">всех</a> поставленных задач
-                </span>
+                    <span class="mx-auto h3">
+                        Список всех <a href="{% url 'home' %}" title="Перейти к поставленным задачам">задач</a>
+                    </span>
                     <form method="get">
-                        <input type="hidden" name="date_range_after" value="{{ date_list|get_item:"now" }}">
                         <label>
                             {{ task_list.form.date_range_modify }}
                         </label>
@@ -25,7 +24,7 @@
                             Выбрать
                         </button>
                         <button class="btn btn-warning btn-sm m-1 mx-auto">
-                            <a href="{% url 'home' %}" style="text-decoration: none">Сброс</a>
+                            <a href="{% url 'all_tasks' %}" style="text-decoration: none">Сброс</a>
                         </button>
                     </form>
                     Задач в данном списке:{{ task_list.qs.count }}

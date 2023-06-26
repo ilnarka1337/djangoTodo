@@ -2,7 +2,7 @@
 {% block body %}
     <div class="container">
         {{ task.title }}
-        <form action="" method="post">
+        <form action="" method="post" style="width: 30%">
             {% csrf_token %}
             {{ tasktupdateform.as_p }}
             <button type="submit" class="btn btn-primary">Обновить</button>

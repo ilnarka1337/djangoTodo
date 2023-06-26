@@ -1,25 +1,20 @@
 @import url('https://fonts.cdnfonts.com/css/montserrat');
 
-todo_list {
-    /*font-family: 'Montserrat', serif;*/
+body {
+    font-family: 'Montserrat', serif;
 }
 
-/*.list-group{*/
-/*    !*max-width: 500px;*!*/
-/*    !*width: 400px;*!*/
-/*}*/
-
-/*@media screen and (max-width: 900px) {*/
-/*    .list-group{*/
-/*        width: 200px;*/
-/*    }*/
-/*}*/
-
-a{
+a {
     text-decoration: underline;
-    color: black;!important;
+    color: black;
+!important;
 }
 
-.change-status{
+.change-status {
     font-size: 10px;
+}
+
+.snps-inline-select{
+    width: auto;
+    display: inline-block;
 }

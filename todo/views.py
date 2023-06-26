@@ -6,48 +6,23 @@ from django.utils.timezone import now
 from datetime import timedelta
 from todo.models import *
 from .forms import *
-from .services import *
-
-
-# Create your views here.
-# class TaskListView(ListView):
-#     model = Task
-#     template_name =
-#     context_object_name = 'task_list'
-#
-#     def get_queryset(self):
-#         return Task.objects.filter(status__lte=1)
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super(TaskListView, self).get_context_data()
-#         context['status_list'] = CHOICES
-#         context['task_done_list'] = self.model.objects.filter(status=2)
-#         context['task_all_list'] = self.model.objects.all()
-#         return context
-#
-#     #
-#     def update_queryset(self):
-#         self.queryset = Task.objects.filter(status=2)
-#         return 1
+from . import services
 
 
 def task_listing(request):
-    # task_filtered = TaskFilter(request.GET, queryset=Task.objects.filter(status__lte=1))
-    task_filtered = TaskFilter(request.GET, queryset=Task.objects.all())
-    date_list = {
-        "now": now().date().isoformat(),
-        "tomorrow": (now() + timedelta(days=1)).date().isoformat(),
-        "next_week": (now() + timedelta(days=7)).date().isoformat(),
-        "all": (now() + timedelta(days=10000)).date().isoformat(),
-    }
     context = {
-        "task_list": task_filtered,
-        "status_list": CHOICES,
-        "date_list": date_list,
-        "task_done_list": Task.objects.filter(status=2),
-        "task_all_list": Task.objects.all(),
+        "task_list": services.TaskFilter(request.GET, queryset=Task.objects.filter(status__lte=1)),
+        "date_list": services.date_list,
     }
     return render(request, "todo/index.html", context)
+
+
+def all_tasks_listing(request):
+    context = {
+        "task_list": services.TaskFilter(request.GET, queryset=Task.objects.all()),
+        "date_list": services.date_list,
+    }
+    return render(request, "todo/all_tasks_list.html", context)
 
 
 class TaskCreateView(CreateView):
@@ -82,6 +57,13 @@ class BigTaskCreateView(CreateView):
     model = BigTask
     form_class = BigTaskAddForm
     template_name = 'todo/addBigTask.html'
+
+
+def task_plan(request, pk):
+    obj = get_object_or_404(Task, pk=pk)
+    obj.status = 0
+    obj.save()
+    return redirect('home')
 
 
 def task_start(request, pk):

@@ -39,6 +39,12 @@ filters = {
     }),
 }
 
+date_list = {
+    "now": now().date().isoformat(),
+    "tomorrow": (now() + timedelta(days=1)).date().isoformat(),
+    "next_week": (now() + timedelta(days=7)).date().isoformat(),
+    "all": (now() + timedelta(days=10000)).date().isoformat(),
+}
 
 def _truncate(dt):
     return dt.date()
