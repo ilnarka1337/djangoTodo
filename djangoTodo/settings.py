@@ -43,7 +43,8 @@ DEBUG = 'RENDER' not in os.environ
 #                   )
 
 
-ALLOWED_HOSTS = ['https://ilnarka1337-todo.onrender.com',]
+ALLOWED_HOSTS = ['https://ilnarka1337-todo.onrender.com',
+                 '0.0.0.0']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
