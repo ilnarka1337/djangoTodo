@@ -9,12 +9,13 @@ from .forms import *
 from . import services
 
 
+
 def task_listing(request):
     context = {
         "task_list": services.TaskFilter(request.GET, queryset=Task.objects.filter(status__lte=1)),
         "date_list": services.date_list,
     }
-    return render(request, "todo/index.html", context)
+    return render(request, "todo/plan_task_list.html", context)
 
 
 def all_tasks_listing(request):

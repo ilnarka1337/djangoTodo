@@ -1,95 +1,12 @@
-{% extends 'todo_base.html' %}
-{% load get_item %}
-{% load static %}
-{% block extrahead %}
-    <title>Список дел</title>
-{#    <link rel="stylesheet" href="{% static 'todo/css/style.css' %}">#}
+{% extends 'task_list_base.html' %}
+{% block task_list_title %}
+    Список всех <a href="{% url 'home' %}" title="Перейти к поставленным задачам">задач</a>
 {% endblock %}
-{% block body %}
-    <todo_list>
-        <div class="container">
-            <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                <div class="task-title list-group">
-                    <span class="mx-auto h3">
-                        Список всех <a href="{% url 'home' %}" title="Перейти к поставленным задачам">задач</a>
-                    </span>
-                    <form method="get">
-                        <label>
-                            {{ task_list.form.date_range_modify }}
-                        </label>
-                        <label>
-                            {{ task_list.form.status }}
-                        </label>
-                        <button type="submit" class="btn btn-warning btn-sm m-1 mx-auto">
-                            Выбрать
-                        </button>
-                        <button class="btn btn-warning btn-sm m-1 mx-auto">
-                            <a href="{% url 'all_tasks' %}" style="text-decoration: none">Сброс</a>
-                        </button>
-                    </form>
-                    Задач в данном списке:{{ task_list.qs.count }}
-                    {% for task in task_list.qs %}
-                        <span class="list-group-item align-content-between d-flex gap-3">
-                            <span class="pt-1 d-flex flex-column form-checked-content order-first">
-                                <strong>
-                                    <span style="vertical-align: inherit;">
-                                        <span style="vertical-align: inherit;">
-                                            <a href="{{ task.get_absolute_url }}">{{ task.title }}</a>
-                                        </span>
-                                    </span>
-                                </strong>
-                                <small class="d-block text-body-secondary">
-                                    <span style="vertical-align: inherit;">
-                                        <span style="vertical-align: inherit;">{{ task.description }}</span>
-                                    </span>
-                                </small>
-                                <small class="d-block text-body-secondary">
-                                    <span style="vertical-align: inherit;">
-                                        Категория:
-                                        <span style="vertical-align: inherit;">{{ task.category.title }}</span>
-                                    </span>
-                                </small>
-                                <small class="d-block text-body-secondary">
-                                    Дата начала:
-                                    <span style="vertical-align: inherit;">
-                                        <span style="vertical-align: inherit;">
-                                            {{ task.started_at_date }}</span>
-                                    </span>
-                                </small>
-                                <small class="d-block text-body-secondary">
-                                    Время начала:
-                                    <span style="vertical-align: inherit;">
-                                        <span style="vertical-align: inherit;">{{ task.started_at_time }}</span>
-                                    </span>
-                                </small>
-                            </span>
-                            <span class="small d-flex flex-column text-body-secondary ms-auto order-last change-status">
-                            {% if task.status == 2 %}
-                                <a href="{% url 'task_start' pk=task.pk%}">{{ task.get_status_display }}</a>
-                            {% elif task.status == 1 %}
-                                <a href="{% url 'task_plan' pk=task.pk%}">{{ task.get_status_display }}</a>
-                            {% endif %}
-                            {% if task.status == 0 %}
-                                <a href="{% url 'task_start' pk=task.pk %}" class="btn btn-primary btn-sm m-1">Начать</a>
-                            {% endif %}
-                            {% if task.status != 2 %}
-                                <a href="{% url 'task_done' pk=task.pk %}"
-                                   class="btn btn-primary btn-sm m-1">Выполнил</a>
-                            {% endif %}
-                            </span>
-                        </span>
-                    {% endfor %}
-                    <a href="{% url 'task_create' %}" class="btn btn-primary mt-3 mx-auto">
-                        Добавление задачи
-                    </a>
-                    <a href="{% url 'big_task_create' %}" class="btn btn-primary mt-3 mx-auto">
-                        Добавление крупной задачи
-                    </a>
-                </div>
-            </div>
-            <br>
-            <hr>
-        </div>
-    </todo_list>
 
+{#{% block task_list_meta %}#}
+{#    <input type="hidden" name="date_range_after" value="{{ date_list|get_item:"now" }}">#}
+{#{% endblock %}#}
+
+{% block task_list_button %}
+    <a href="{% url 'all_tasks' %}" style="text-decoration: none">Сброс</a>
 {% endblock %}

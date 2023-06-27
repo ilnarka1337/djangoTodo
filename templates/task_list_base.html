@@ -3,7 +3,6 @@
 {% load static %}
 {% block extrahead %}
     <title>Список дел</title>
-{#    <link rel="stylesheet" href="{% static 'todo/css/style.css' %}">#}
 {% endblock %}
 {% block body %}
     <todo_list>
@@ -11,10 +10,13 @@
             <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                 <div class="task-title list-group">
                 <span class="mx-auto h3">
-                    Список <a href="{% url 'all_tasks' %}" title="Перейти ко всем задачам">всех</a> поставленных задач
+                    {% block task_list_title %}
+
+                    {% endblock %}
                 </span>
                     <form method="get">
-                        <input type="hidden" name="date_range_after" value="{{ date_list|get_item:"now" }}">
+                    {% block task_list_meta %}
+                    {% endblock %}
                         <label>
                             {{ task_list.form.date_range_modify }}
                         </label>
@@ -25,7 +27,8 @@
                             Выбрать
                         </button>
                         <button class="btn btn-warning btn-sm m-1 mx-auto">
-                            <a href="{% url 'home' %}" style="text-decoration: none">Сброс</a>
+                            {% block task_list_button %}
+                            {% endblock %}
                         </button>
                     </form>
                     Задач в данном списке:{{ task_list.qs.count }}

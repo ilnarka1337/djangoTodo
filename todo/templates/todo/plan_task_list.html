@@ -1,0 +1,9 @@
+{% extends 'task_list_base.html' %}
+
+{% block task_list_title %}
+    Список <a href="{% url 'all_tasks' %}" title="Перейти ко всем задачам">всех</a> поставленных задач
+{% endblock %}
+
+{% block task_list_button %}
+    <a href="{% url 'home' %}" style="text-decoration: none">Сброс</a>
+{% endblock %}

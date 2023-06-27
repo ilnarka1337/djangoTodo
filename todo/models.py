@@ -4,6 +4,7 @@ import django.utils.timezone
 from django.db import models
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
+from users.models import CustomUser
 
 CHOICES = (
     (0, 'Запланировано'),
@@ -32,6 +33,7 @@ class Category(MPTTModel):
 class Task(models.Model):
     title = models.CharField(max_length=200, verbose_name='Название')
     description = models.CharField(max_length=1000, verbose_name='Описание задачи', blank=True)
+    author = models.ForeignKey(CustomUser, verbose_name='Создатель', on_delete=models.CASCADE)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     started_at_date = models.DateField(default=django.utils.timezone.localtime, verbose_name='Дата начала')
@@ -50,15 +52,13 @@ class Task(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('task_detail', kwargs={'pk' : self.pk})
-
-
-
+        return reverse('task_detail', kwargs={'pk': self.pk})
 
 
 class BigTask(models.Model):
     title = models.CharField(max_length=200, verbose_name='Название крупной задачи')
     description = models.CharField(max_length=1000, verbose_name='Описание задачи', blank=True)
+    author = models.ForeignKey(CustomUser, verbose_name='Создатель', on_delete=models.CASCADE)
     body = models.ManyToManyField(Task, verbose_name='Подзадачи', related_name='tasks')
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
