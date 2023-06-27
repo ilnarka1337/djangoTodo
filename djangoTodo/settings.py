@@ -10,8 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
-import environ
-from boto.s3.connection import S3Connection
 from pathlib import Path
 
 
@@ -29,12 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', default='django-insecure-%e8d_j-%r3(bmf@dzat$uvuol$t%z4a(&kk6g=tnmp#p^_epw_')
 # SECRET_KEY = os.environ.get('SECRET_KEY', 'DEV_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = env('DEBUG')
-DEBUG = bool(os.environ.get('DEBUG', True))
+DEBUG = 'RENDER' not in os.environ
+
 # s3 = S3Connection(os.environ['HOST'],
 #                   os.environ['NAME'],
 #                   os.environ['PASSWORD'],
@@ -44,13 +43,11 @@ DEBUG = bool(os.environ.get('DEBUG', True))
 #                   )
 
 
-ALLOWED_HOSTS = ['192.168.31.247',
-                 'localhost',
-                 '127.0.0.1',
-                 '0.0.0.0',
-                 '192.168.31.192',
-                 'minejooker.pythonanywhere.com',
-                 'iln-django-todo.herokuapp.com']
+ALLOWED_HOSTS = []
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 
 # Application definition
 
@@ -154,7 +151,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+if not DEBUG:
+    # Tell Django to copy statics to the `staticfiles` directory
+    # in your application directory on Render.
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    # Turn on WhiteNoise storage backend that takes care of compressing static files
+    # and creating unique names for each version so they can safely be cached forever.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'djangoTodo/static'),
 # )
