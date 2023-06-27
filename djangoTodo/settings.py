@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 
@@ -17,6 +18,7 @@ from pathlib import Path
 #     # set casting, default value
 #     DEBUG=(bool, False)
 # )
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,8 +33,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='django-insecure-%e8d_j-%r3(bmf@dza
 # SECRET_KEY = os.environ.get('SECRET_KEY', 'DEV_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = env('DEBUG')
-DEBUG = 'RENDER' not in os.environ
+DEBUG = os.getenv('DEBUG', default='True')
+# DEBUG = 'RENDER' not in os.environ
 
 # s3 = S3Connection(os.environ['HOST'],
 #                   os.environ['NAME'],
@@ -44,12 +46,7 @@ DEBUG = 'RENDER' not in os.environ
 
 
 ALLOWED_HOSTS = ['https://ilnarka1337-todo.onrender.com',
-                 '0.0.0.0',
-                 '0.0.0.0:10000']
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-
+                 '127.0.0.1']
 
 # Application definition
 
