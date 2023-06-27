@@ -11,13 +11,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 import environ
+from boto.s3.connection import S3Connection
 from pathlib import Path
 
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
+# env = environ.Env(
+#     # set casting, default value
+#     DEBUG=(bool, False)
+# )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,15 +26,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = env('DEV_SECRET_KEY')
-SECRET_KEY = os.environ.get('SECRET_KEY', 'DEV_SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY', 'DEV_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = env('DEBUG')
 DEBUG = bool(os.environ.get('DEBUG', True))
+# s3 = S3Connection(os.environ['HOST'],
+#                   os.environ['NAME'],
+#                   os.environ['PASSWORD'],
+#                   os.environ['PORT'],
+#                   os.environ['SECRET_KEY'],
+#                   os.environ['USER'],
+#                   )
 
 
 ALLOWED_HOSTS = ['192.168.31.247',
@@ -97,11 +105,11 @@ WSGI_APPLICATION = 'djangoTodo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('NAME'),
-        'USER': env('USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('PORT'),
+        'NAME': os.getenv('NAME'),
+        'USER': os.getenv('USER'),
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT'),
 
     }
 }
