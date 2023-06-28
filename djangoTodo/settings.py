@@ -45,7 +45,7 @@ DEBUG = os.getenv('DEBUG', default='True')
 #                   )
 
 
-ALLOWED_HOSTS = ['https://ilnarka1337-todo.onrender.com',
+ALLOWED_HOSTS = ['minejooker.pythonanywhere.com',
                  '127.0.0.1']
 
 # Application definition
